@@ -28,3 +28,4 @@ CS/IS 166 covers the extension of basic addressing concepts to more advanced add
 
 **Transfer Credit:** CSU, UC, USC.
 
+<img src="./assets/asm.png" alt="asm" height="100">

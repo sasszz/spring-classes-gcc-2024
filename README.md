@@ -27,3 +27,5 @@ CS/IS 166 covers the extension of basic addressing concepts to more advanced add
 **Course Typically Offered:** Spring (Every Other Year).
 
 **Transfer Credit:** CSU, UC, USC.
+
+<img src="./assets/asm.png" alt="asm" height="100">

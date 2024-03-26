@@ -12,9 +12,7 @@ CS/IS 280 discusses issues in the design, implementation, and use of high-level 
 
 **Transfer Credit:** CSU, UC, USC.
 
-<img src="./assets/fortran.jpg" alt="Fortran" width="300" height="200">
-<img src="./assets/ada.png" alt="ada" width="300" height="200">
-<img src="./assets/cobol.jpg" alt="cobol" width="300" height="200">
+<img src="./assets/fortran.jpg" alt="Fortran" height="100"><img src="./assets/ada.png" alt="ada" height="100"><img src="./assets/cobol.jpg" alt="cobol" height="100">
 
 ---
 

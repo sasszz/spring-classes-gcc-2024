@@ -1,0 +1,247 @@
+Line Addr      Word  Label       Opcode   Mode Operand         Comment
+0001 00000000            / Chevreuil Lab2 CS166
+0002 00000000            / Updated 15 March 2024
+0003 00000000            
+0004 00000100                    *0100                         
+0005 00000100  7621              CAM                           
+0006 00000101  5002              TADAM         AMENU           
+0007 00000102  4411              JMP           MAIN            
+0008 00000103  0000  CH,         .-.                           / signifies a variable
+0009 00000104  0352  AMENU,      MENU                          
+0009 00000105  0000      
+0010 00000106  7635  NEGC,       -'c'                          
+0011 00000107  7637  NEGA,       -'a'                          
+0012 00000110  7615  NEGS,       -'s'                          
+0013 00000111  7617  NEGQ,       -'q'                          
+0014 00000112  0473  AERR,       ERR                           
+0014 00000113  0000      
+0015 00000114            
+0016 00000114  7621  MAIN,       CAM                           / start of do loop
+0017 00000115  5066              TADAM         AMENU           / print menu
+0018 00000116  4075              JMS           PRT_MSG         
+0019 00000117  6236              KRB                           / input char
+0020 00000120  3162              DCA           CH              
+0021 00000121  6236              KRB                           / eat the newline
+0022 00000122  7200              CLA                           
+0023 00000123  1157              TAD           CH              / is ch == 'c'?
+0024 00000124  1161              TAD           NEGC            
+0025 00000125  7650              SNA           CLA             
+0026 00000126  4425              JMP           TASKC           / yes, clear calculator
+0027 00000127  1153              TAD           CH              / is ch == 'a'?
+0028 00000130  1156              TAD           NEGA            
+0029 00000131  7650              SNA           CLA             
+0030 00000132  4430              JMP           TASKA           / yes, begin adding, request number
+0031 00000133  1147              TAD           CH              / is ch == 's'?
+0032 00000134  1153              TAD           NEGS            
+0033 00000135  7650              SNA           CLA             
+0034 00000136  4440              JMP           TASKS           / yes, begin subtracting, request number
+0035 00000137  1143              TAD           CH              / quit?
+0036 00000140  1150              TAD           NEGQ            
+0037 00000141  7650              SNA           CLA             
+0038 00000142  7402              HLT                           / yes, stop
+0039 00000143  7621              CAM                           
+0040 00000144  5045              TADAM         AERR            
+0041 00000145  4046              JMS           PRT_MSG         
+0042 00000146  4545              JMP           MAIN            
+0043 00000147            
+0044 00000147  0000  NUMBER,     .-.                           
+0045 00000150  0445  APROMPT1,   PROMPT1                       
+0045 00000151  0000      
+0046 00000152  0457  APROMPT2,   PROMPT2                       
+0046 00000153  0000      
+0047 00000154  7621  TASKC,      CAM                           / print prompt
+0048 00000155  5074              TADAM         APROMPT2        / "number is:" prompt
+0049 00000156  4035              JMS           PRT_MSG         
+0050 00000157  7200              CLA                           / clear calculator
+0051 00000160  3166              DCA           NUMBER          
+0052 00000161  4042              JMS           DECOUT          
+0053 00000162  4531              JMP           MAIN            
+0054 00000163  7621  TASKA,      CAM                           / print prompt
+0055 00000164  5063              TADAM         APROMPT1        / "number?" prompt
+0056 00000165  4026              JMS           PRT_MSG         
+0057 00000166  4073              JMS           DECIN           / get number
+0058 00000167  1157              TAD           NUMBER          / add number
+0059 00000170  3156              DCA           NUMBER          
+0060 00000171  7621              CAM                           / print prompt
+0061 00000172  5057              TADAM         APROMPT2        / "Number is:" prompt
+0062 00000173  4020              JMS           PRT_MSG         
+0063 00000174  1152              TAD           NUMBER          
+0064 00000175  4026              JMS           DECOUT          
+0065 00000176  4515              JMP           MAIN            
+0066 00000177  7621  TASKS,      CAM                           / print prompt
+0067 00000200  5047              TADAM         APROMPT1        / "number?" prompt
+0068 00000201  4012              JMS           PRT_MSG         
+0069 00000202  4057              JMS           DECIN           / get number
+0070 00000203  7041              CMA           IAC             / make it negative
+0071 00000204  1142              TAD           NUMBER          / add number
+0072 00000205  3141              DCA           NUMBER          
+0073 00000206  7621              CAM                           / print prompt
+0074 00000207  5042              TADAM         APROMPT2        / "Number is:" prompt
+0075 00000210  4003              JMS           PRT_MSG         
+0076 00000211  1135              TAD           NUMBER          
+0077 00000212  4011              JMS           DECOUT          
+0078 00000213  4500              JMP           MAIN            
+0079 00000214  0000  TOS=        0                             / top of stack
+0080 00000214  7415  PRT_MSG,    PUSHAM                        / save the message address and clear AC/MQ
+0081 00000215  1600  PRT_LOOP,   TAD      IS   TOS             
+0082 00000216  7450              SNA                           
+0083 00000217  6702              RET           2               / null character, exit
+0084 00000220  6244              TPC                           / else print the character
+0085 00000221  2400              ISZ      S    TOS             / update pointer
+0086 00000222  7200              CLA                           
+0087 00000223  4571              JMP           PRT_LOOP        
+0088 00000224            
+0089 00000224            
+0090 00000224            / decout - print decimal value , value to print in AC
+0091 00000224  7421  DECOUT,     MQL                           / save the number
+0092 00000225  6500              PUSH                          / push 0 onto stack to end print
+0093 00000226  7501              MQA                           / see if negative
+0094 00000227  7500              SMA                           
+0095 00000230  4404              JMP           DECO_POS        / positive number
+0096 00000231  7041              CMA           IAC             / make positive
+0097 00000232  7421              MQL                           / update number
+0098 00000233  1016              TAD           MINUS           / print minus
+0099 00000234  6246              TLS                           / print
+0100 00000235  7200  DECO_POS,   CLA                           
+0101 00000236  7407  DECO_LP1,   DVI                           / divide by 10 to get least digit
+0102 00000237  0012              10                            
+0103 00000240  1012              TAD           DEC_ASC0        / make printable
+0104 00000241  6500              PUSH                          / push onto stack
+0105 00000242  7501              MQA                           / get quotient
+0106 00000243  7640              SZA           CLA             / quotient zero?
+0107 00000244  4571              JMP           DECO_LP1        / no, keep dividing
+0108 00000245  6600  DECO_LP2,   POP                           / else print all the digits
+0109 00000246  7450              SNA                           / value 0?
+0110 00000247  6700              RET                           / yes, exit
+0111 00000250  6246              TLS                           / no, print digit
+0112 00000251  4573              JMP           DECO_LP2        / next digit
+0113 00000252  0055  MINUS,      '-'                           
+0114 00000253  0060  DEC_ASC0,   '0'                           
+0115 00000254            
+0116 00000254            
+0117 00000254  7720  DEC_N0,     -'0'                          
+0118 00000255  7766  DEC_N10,    -10                           
+0119 00000256  0214  IPRTMSG,    PRT_MSG                       
+0119 00000257  0000      
+0120 00000260            
+0121 00000260            / offsets for decimal input
+0122 00000260  0000  DEC_FLAG=   0                             / flag,
+0123 00000260  0001  DEC_DIGIT=  1                             / current digit
+0124 00000260            
+0125 00000260            / input decimal number 
+0126 00000260            / 
+0127 00000260  7723  DEC_MINUS,  -'-'                          
+0128 00000261  7766  DEC_NEGNL,  -'\n'                         
+0129 00000262  6502  DECIN,      ENTER         2               / make space for minus flag, and digit
+0130 00000263  3400              DCA      S    DEC_FLAG        / clear flag
+0131 00000264  7421              MQL                           / clear multipler quotient
+0132 00000265  6236              KRB                           / read first digit
+0133 00000266  3401              DCA      S    DEC_DIGIT       / save it
+0134 00000267  1170              TAD           DEC_MINUS       / minus sign?
+0135 00000270  1401              TAD      S    DEC_DIGIT       
+0136 00000271  7640              SZA           CLA             
+0137 00000272  4404              JMP           DECI_LP         / no, positive
+0138 00000273  7001              IAC                           / yes, set flag for negate
+0139 00000274  3400              DCA      S    DEC_FLAG        
+0140 00000275  1155              TAD           DEC_ASC0        
+0141 00000276  3401              DCA      S    DEC_DIGIT       / replace minus with leading zero
+0142 00000277  1161  DECI_LP,    TAD           DEC_NEGNL       / newline?
+0143 00000300  1401              TAD      S    DEC_DIGIT       
+0144 00000301  7640              SZA           CLA             
+0145 00000302  4412              JMP           DECI_CONT       / no, add digit
+0146 00000303  1400              TAD      S    DEC_FLAG        / exit, but should negate number?
+0147 00000304  7650              SNA           CLA             
+0148 00000305  4403              JMP           DECI_RET        / no, just leave
+0149 00000306  7501              MQA                           / get value
+0150 00000307  7041              CMA           IAC             / negate
+0151 00000310  7421              MQL                           / update
+0152 00000311  6602  DECI_RET,   LEAVE         2               / get remove other parameters
+0153 00000312  7200              CLA                           
+0154 00000313  7501              MQA                           / get answer
+0155 00000314  6700              RET                           
+0156 00000315  1401  DECI_CONT,  TAD      S    DEC_DIGIT       / get ascii digit
+0157 00000316  1135              TAD           DEC_N0          / make into a value
+0158 00000317  3401              DCA      S    DEC_DIGIT       
+0159 00000320  1134              TAD           DEC_N10         / in range?
+0160 00000321  1401              TAD      S    DEC_DIGIT       
+0161 00000322  7710              SPA           CLA             
+0162 00000323  4403              JMP           DECI_M10        / yes, add to number
+0163 00000324  1012              TAD           DEC_ERRIN       / no, print error and leave
+0164 00000325  4330              JMS      I    IPRTMSG         / print messag
+0165 00000326  4562              JMP           DECI_RET        
+0166 00000327  7405  DECI_M10,   MUY                           / multiply by 10
+0167 00000330  0012              10                            
+0168 00000331  7501              MQA                           / get answer
+0169 00000332  1401              TAD      S    DEC_DIGIT       / add digit
+0170 00000333  7421              MQL                           / update number
+0171 00000334  6236              KRB                           / get next digit
+0172 00000335  3401              DCA      S    DEC_DIGIT       
+0173 00000336  4540              JMP           DECI_LP         
+0174 00000337            
+0175 00000337  0102  DEC_ERRIN,  "Bad digit\n\0"                      
+     00000340    0141   0144   0040   0144   0151   0147   0151   0164  
+     00000350    0012   0000  
+0176 00000352            
+0177 00000352  0012  MENU,       "\n q. quit, c. clear, a. add, s. subtract\n"                      
+     00000353    0040   0161   0056   0040   0161   0165   0151   0164  
+     00000363    0054   0040   0143   0056   0040   0143   0154   0145  
+     00000373    0141   0162   0054   0040   0141   0056   0040   0141  
+     00000403    0144   0144   0054   0040   0163   0056   0040   0163  
+     00000413    0165   0142   0164   0162   0141   0143   0164   0012  
+0178 00000423  0105              "Enter selection: \0"                      
+     00000424    0156   0164   0145   0162   0040   0163   0145   0154  
+     00000434    0145   0143   0164   0151   0157   0156   0072   0040  
+     00000444    0000  
+0179 00000445  0116  PROMPT1,    "Number?: \0"                      
+     00000446    0165   0155   0142   0145   0162   0077   0072   0040  
+     00000456    0000  
+0180 00000457  0116  PROMPT2,    "Number is: \0"                      
+     00000460    0165   0155   0142   0145   0162   0040   0151   0163  
+     00000470    0072   0040   0000  
+0181 00000473  0111  ERR,        "Invalid selection\n\0"                      
+     00000474    0156   0166   0141   0154   0151   0144   0040   0163  
+     00000504    0145   0154   0145   0143   0164   0151   0157   0156  
+     00000514    0012   0000  
+Label     	Address
+ERR       	473 
+PROMPT2   	457 
+PROMPT1   	445 
+MENU      	352 
+DEC_ERRIN 	337 
+DECI_M10  	327 
+DECI_CONT 	315 
+DECI_RET  	311 
+DECI_LP   	277 
+DECIN     	262 
+DEC_NEGNL 	261 
+DEC_MINUS 	260 
+DEC_DIGIT 	1   
+DEC_FLAG  	0   
+IPRTMSG   	256 
+DEC_N10   	255 
+DEC_N0    	254 
+DEC_ASC0  	253 
+MINUS     	252 
+DECO_LP2  	245 
+DECO_LP1  	236 
+DECO_POS  	235 
+DECOUT    	224 
+PRT_LOOP  	215 
+PRT_MSG   	214 
+TOS       	0   
+TASKS     	177 
+TASKA     	163 
+TASKC     	154 
+APROMPT2  	152 
+APROMPT1  	150 
+NUMBER    	147 
+MAIN      	114 
+AERR      	112 
+NEGQ      	111 
+NEGS      	110 
+NEGA      	107 
+NEGC      	106 
+AMENU     	104 
+CH        	103 
+
+Errors = 0

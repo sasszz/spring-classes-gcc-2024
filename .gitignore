@@ -1,0 +1,7 @@
+# Ignore executables
+*.exe
+
+# Ignore specific file types
+*.mica
+*.mco
+*.swp

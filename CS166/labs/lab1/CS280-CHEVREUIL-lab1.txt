@@ -1,0 +1,31 @@
+! Lucie Chevreuil
+! CS 280, Spring 2024
+! Lab 1
+
+program findminmax
+    integer :: arraySize, value, min, max, i
+    
+    open(5, file='/uploads/input.txt')
+    
+    ! read in the size of the array from 1st index
+    read(5, *) arraySize
+
+    ! read in the 2nd index value to initialize min and max
+    read(5, *) value
+    min = value
+    max = value
+    
+    ! loop to find min and max
+    do i = 2, arraySize
+        read(5, *) value
+        if (value < min) min = value
+        if (value > max) max = value
+    end do
+    
+    close(5)
+    
+    ! print min and max
+    print *, "Minimum of array:", min
+    print *, "Maximum of array:", max
+
+end program findminmax

@@ -1,3 +1,39 @@
+/ Lucie Chevreuil
+/ Lab 4, CS 166
+
+          *0100
+          jmp main
+numbers,  12; 6; 38; 34; 5; 29; 17
+size,     7
+anumbers, numbers
+main,     cam
+          tadam anumbers
+          enter 2
+          dcam s tos / put on top of stack
+          jms print
+          leave 2
+          hlt
+
+/ print the array
+index= 0            / for loop index
+ary= 3              / parm pointer to array
+print,    cla       / set up index
+          push
+for,      tad s index       / check index < size
+          cma iac           / make negative
+          tad size
+          sna cla           / exit?
+          jmp forexit       / yes!
+          tad is ary        / get the value
+          jms decout        / print
+          tad nl
+          tls               / print newline
+          isz s index       / increment index
+          cla
+          isz s ary
+          jmp for
+forexit,  ret 1               / remove index and return
+nl,       '\n'
 tos=      0 / top of stack
 prt_msg,  pusham   / save the message address and clear AC/MQ
 prt_loop, tad is tos

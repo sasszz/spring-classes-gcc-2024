@@ -1,0 +1,29 @@
+class Birthday
+  def initialize(name, age)
+    @name = name
+    @age = age
+  end
+
+  def happy_bday
+    puts "Happy Birthday #{@name}! You are #{@age} years old."
+  end
+
+  def retire
+    years_until_retirement = 65 - @age
+    puts "#{@name}, you have #{years_until_retirement} years until retirement."
+  end
+
+  def set_age(new_age)
+    @age = new_age
+  end
+end
+
+# Testing the Birthday class
+person = Birthday.new("Alice", 30)
+person.happy_bday
+person.retire
+
+person.set_age(40)
+person.happy_bday
+person.retire
+
